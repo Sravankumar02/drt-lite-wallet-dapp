@@ -12,21 +12,21 @@ const WIDGETS: WidgetType[] = [
     widget: Tokens,
     description: 'Tokens for the connected account',
     reference:
-      'http://localhost:3001/#/accounts/AccountController_getAccountTokens'
+      'https://api.dharitri.org/#/accounts/AccountController_getAccountTokens'
   },
   {
     title: 'NFTs',
     widget: NFTs,
     description: 'NFTs for the connected account',
     reference:
-      'http://localhost:3001/#/accounts/AccountController_getAccountNfts'
+      'https://api.dharitri.org/#/accounts/AccountController_getAccountNfts'
   },
   {
     title: 'Transactions',
     widget: Transactions,
     description: 'Transactions list for the connected account',
     reference:
-      'http://localhost:3001/#/accounts/AccountController_getAccountTransactions'
+      'https://api.dharitri.org/#/accounts/AccountController_getAccountTransactions'
   }
 ];
 

@@ -61,6 +61,14 @@ export const PostMessageListener = () => {
 
     const { type, payload } = event.data;
 
+    const isWalletRequest = Object.values(WindowProviderRequestEnums).includes(
+      type as WindowProviderRequestEnums
+    );
+
+    if (!isWalletRequest) {
+      return;
+    }
+
     const isHandshakeEstablished =
       type === WindowProviderRequestEnums.finalizeHandshakeRequest ||
       // handshake must be established for all other requests

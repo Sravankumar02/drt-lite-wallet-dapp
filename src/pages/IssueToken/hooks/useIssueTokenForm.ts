@@ -12,7 +12,7 @@ import {
   parseAmount
 } from 'lib';
 
-import { DECIMALS } from 'localConstants';
+import { DECIMALS, DCDT_ISSUE_COST } from 'localConstants';
 import { IssueTokenFieldsEnum } from '../types';
 
 export const useIssueTokenForm = () => {
@@ -26,6 +26,11 @@ export const useIssueTokenForm = () => {
   const factory = new TokenManagementTransactionsFactory({
     config: new TransactionsFactoryConfig({ chainID: chainId })
   });
+
+  // @ts-ignore
+  factory.dcdtContractAddress = new Address(
+    'drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez'
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -85,7 +90,11 @@ export const useIssueTokenForm = () => {
         }
       );
 
-      await sendTransactions([transaction]);
+      transaction.value = BigInt(
+         parseAmount(DCDT_ISSUE_COST, values.numDecimals)
+       );
+ 
+       await sendTransactions([transaction]);
       formik.resetForm();
     }
   });

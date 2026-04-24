@@ -34,8 +34,8 @@ export const emptyNetwork: NetworkType = {
   sampleAuthenticatedDomains: [],
   sovereignContractAddress: '',
   walletAddress: '',
-  socketAddress: 'ws://localhost:6002',// New: Supports dedicated WS ports (e.g., 6002)
-  WREWAid: ''
+  WREWAid: '',
+  socketAddress: ''
 };
 
 export const getInitialState = (): NetworkSliceType => {

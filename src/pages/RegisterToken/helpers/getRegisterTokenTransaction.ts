@@ -1,7 +1,7 @@
 import { numberToHex } from 'helpers/operations/toHex';
 import { stringToHex } from 'helpers/operations/toHex';
 import { prepareTransaction } from 'lib';
-import { GAS_PRICE, SOVEREIGN_TRANSFER_GAS_LIMIT } from 'localConstants';
+import { GAS_PRICE, SOVEREIGN_TRANSFER_GAS_LIMIT, DCDT_ISSUE_COST } from 'localConstants';
 import {
   NftEnumType,
   PartialNftType,
@@ -51,7 +51,7 @@ export const getRegisterTokenTransaction = ({
   const data = `registerToken@${args}`;
 
   return prepareTransaction({
-    amount: '0.05',
+    amount: DCDT_ISSUE_COST,
     balance,
     chainId: values.chainId.value,
     data,

@@ -116,10 +116,9 @@
   top: 0;
   transition: var(--transition);
   width: 24px;
-
-  &:hover {
-    opacity: 0.75;
-  }
+}
+.password-visibility-toggle:hover {
+  opacity: 0.75;
 }
 
 .DraggableTags {

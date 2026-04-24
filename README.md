@@ -46,7 +46,7 @@ yarn  start-mainnet
 
 This will start the React app in development mode, using the configs found in the `vite.config.ts` file.
 
-Open [https://localhost:3002](https://localhost:3002) to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.
 
