@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { OutputContainer } from 'components/OutputContainer';
 import { TransactionRow } from 'components/sdkDapp.components';
 import {
@@ -7,22 +8,25 @@ import {
   useGetAccountInfo
 } from 'lib';
 import { useLazyGetTransactionsQuery } from 'redux/endpoints';
+import { RootState } from 'redux/store';
 import { ServerTransactionType } from 'types';
 
 const COLUMNS = ['TxHash', 'Age', 'Shard', 'From', 'To', 'Method', 'Value'];
 
 export const Transactions = () => {
   const { websocketEvent, address } = useGetAccountInfo();
+  const refreshCount = useSelector(
+    (state: RootState) => state.account.refreshCount
+  );
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();
-
   const [fetchTransactions, { data: transactions, isLoading }] =
     useLazyGetTransactionsQuery();
 
   useEffect(() => {
     fetchTransactions(address);
-  }, [address, websocketEvent]);
+  }, [address, websocketEvent, refreshCount]);
 
   if (!isLoading && transactions?.length === 0) {
     return (

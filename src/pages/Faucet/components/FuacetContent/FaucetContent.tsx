@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Loader } from 'components';
 import { getRewaLabel, refreshAccount, useGetAccountInfo } from 'lib';
 import { DataTestIdsEnum } from 'localConstants';
@@ -6,12 +7,14 @@ import {
   useGetFaucetSettingsQuery,
   useRequestFundsMutation
 } from 'redux/endpoints';
+import { triggerRefresh } from 'redux/slices';
 import { FaucetError } from '../FaucetError';
 import { FaucetScreen } from '../FaucetScreen';
 import { FaucetSuccess } from '../FaucetSuccess';
 
 export const FaucetContent = () => {
   const ref = useRef(null);
+  const dispatch = useDispatch();
   const [getFunds, { isSuccess }] = useRequestFundsMutation();
   const [fundsReceived, setFundsReceived] = useState(false);
   const [requestFailed, setRequestFailed] = useState('');
@@ -36,7 +39,24 @@ export const FaucetContent = () => {
         (response.error as any).data.message ||
           'The faucet is available once every 24 hours.'
       );
+       // src/pages/Faucet/components/FuacetContent/FaucetContent.tsx
+
+    } else {
+      // Immediate refresh
+      dispatch(triggerRefresh());
+      refreshAccount();
+
+      // Poll every 5 seconds for 30 seconds to catch the status/balance update
+      const pollInterval = setInterval(() => {
+        console.log('Polling for faucet update...');
+        dispatch(triggerRefresh());
+        refreshAccount();
+      }, 5000);
+
+      // Clear the interval after 30 seconds
+      setTimeout(() => clearInterval(pollInterval), 30000);
     }
+
 
     if (ref.current !== null) {
       setFundsReceived(true);

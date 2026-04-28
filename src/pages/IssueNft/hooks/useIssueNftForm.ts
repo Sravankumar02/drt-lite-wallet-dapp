@@ -34,6 +34,12 @@ export const useIssueNftForm = () => {
     config: new TransactionsFactoryConfig({ chainID: chainId })
   });
 
+  // @ts-ignore
+  factory.dcdtContractAddress = new Address(
+    'drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez'
+  );
+
+
   const formik = useFormik({
     initialValues: {
       [IssueNftFieldsEnum.name]: '',

@@ -11,8 +11,7 @@ export const networks: NetworkType[] = [
     id: EnvironmentsEnum.devnet,
     name: 'Gateway',
     apiAddress: '',
-    gatewayUrl:
-      'https://municipality-phones-immediately-engage.trycloudflare.com',
+    gatewayUrl: 'https://certificate-vsnet-vice-consumers.trycloudflare.com',
     extrasApi: 'http://localhost:3000',
     sampleAuthenticatedDomains: [''],
     sovereignContractAddress: '',

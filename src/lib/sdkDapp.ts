@@ -66,7 +66,8 @@ export {
 } from '@sravankumar02/sdk-dapp/services/transactions/clearTransactions';
 export {
   setTransactionsDisplayInfoState,
-  setTransactionsToSignedState
+  setTransactionsToSignedState,
+  updateSignedTransactionsState
 } from '@sravankumar02/sdk-dapp/services/transactions/updateSignedTransactions';
 export { sendBatchTransactions } from '@sravankumar02/sdk-dapp/services/transactions/sendBatchTransactions';
 export { useAxiosInterceptorContext } from '@sravankumar02/sdk-dapp/wrappers/AxiosInterceptorContext';

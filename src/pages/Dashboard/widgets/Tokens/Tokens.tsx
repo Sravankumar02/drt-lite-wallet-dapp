@@ -1,19 +1,24 @@
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { DrtLink, OutputContainer } from 'components';
 import { useGetAccountInfo } from 'lib';
 import { DataTestIdsEnum } from 'localConstants';
 import { useLazyGetTokensQuery } from 'redux/endpoints';
 import { routeNames } from 'routes';
+import { RootState } from 'redux/store';
 import { TokenType } from 'types';
 import { TokenRow } from './components';
 
 export const Tokens = () => {
   const { websocketEvent, address } = useGetAccountInfo();
+  const refreshCount = useSelector(
+    (state: RootState) => state.account.refreshCount
+  );
   const [fetchTokens, { data: tokens, isLoading }] = useLazyGetTokensQuery();
 
   useEffect(() => {
     fetchTokens(address);
-  }, [address, websocketEvent]);
+  }, [address, websocketEvent, refreshCount]);
 
   if (!isLoading && tokens?.length === 0) {
     return (

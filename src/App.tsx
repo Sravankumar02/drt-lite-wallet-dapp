@@ -14,6 +14,7 @@ import { provider } from 'helpers/app';
 import { getWebviewToken } from 'lib';
 import { PageNotFound, Unlock } from 'pages';
 import { setIsWebview } from 'redux/slices';
+import { TransactionsTracker } from './components';
 import { routeNames, routes } from 'routes';
 import { BatchTransactionsContextProvider } from 'wrappers';
 import { useSetupHrp } from './hooks';
@@ -43,27 +44,18 @@ const AppContent = () => {
         apiAddress: activeNetwork.apiAddress,
         apiTimeout,
         walletConnectV2ProjectId,
-        websocketUrl: activeNetwork.socketAddress || activeNetwork.apiAddress // Correctly uses 6002
+        websocketUrl: (activeNetwork.socketAddress || activeNetwork.apiAddress)
+        .replace(/^http/, 'ws')
+        .replace('ws://', window.location.protocol === 'https:' ? 'wss://' : 'ws://')
+
       }}
       dappConfig={{
         logoutRoute: routeNames.unlock,
         shouldUseWebViewProvider: isWebview
       }}
-      customComponents={{
-        transactionTracker: {
-          // uncomment this to use the custom transaction tracker
-          // component: TransactionsTracker,
-          props: {
-            onSuccess: (sessionId: string) => {
-              console.log(`Session ${sessionId} successfully completed`);
-            },
-            onFail: (sessionId: string, errorMessage: string) => {
-              console.log(`Session ${sessionId} failed. ${errorMessage ?? ''}`);
-            }
-          }
-        }
-      }}
+      customComponents={{}}
     >
+      <TransactionsTracker />
       <Layout>
         <Routes>
           <Route path={routeNames.unlock} element={<Unlock />} />

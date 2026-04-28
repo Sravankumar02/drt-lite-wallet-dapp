@@ -6,10 +6,11 @@ import {
   useGetNetworkConfig,
   Address,
   TokenManagementTransactionsFactory,
-  TransactionsFactoryConfig
+  TransactionsFactoryConfig,
+  parseAmount
 } from 'lib';
 
-import { CollectionTypeByNftEnum } from 'localConstants';
+import { CollectionTypeByNftEnum, DCDT_ISSUE_COST } from 'localConstants';
 import { NftEnumType } from 'types';
 import { IssueCollectionFieldsEnum } from '../types';
 
@@ -24,6 +25,11 @@ export const useIssueCollectionForm = () => {
   const factory = new TokenManagementTransactionsFactory({
     config: new TransactionsFactoryConfig({ chainID: chainId })
   });
+
+  // @ts-ignore
+  factory.dcdtContractAddress = new Address(
+    'drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez'
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -61,6 +67,8 @@ export const useIssueCollectionForm = () => {
             numDecimals: BigInt(0)
           }
         );
+
+      transaction.value = BigInt(parseAmount(DCDT_ISSUE_COST, 18));
 
       await sendTransactions([transaction]);
       formik.resetForm();

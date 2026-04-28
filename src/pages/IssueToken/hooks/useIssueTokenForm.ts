@@ -91,10 +91,10 @@ export const useIssueTokenForm = () => {
       );
 
       transaction.value = BigInt(
-         parseAmount(DCDT_ISSUE_COST, values.numDecimals)
-       );
- 
-       await sendTransactions([transaction]);
+        parseAmount(DCDT_ISSUE_COST, values.numDecimals)
+      );
+
+      await sendTransactions([transaction]);
       formik.resetForm();
     }
   });

@@ -21,13 +21,15 @@ interface AccountSliceType {
   addressIndex: number | null;
   accessTokenRedirectRoute?: string;
   isWebview?: boolean;
+  refreshCount: number;
 }
 
 const initialState: AccountSliceType = {
   fileLogin: null,
   keystoreFile: '',
   tokenLogin: null,
-  addressIndex: null
+  addressIndex: null,
+  refreshCount: 0
 };
 
 export const accountSlice = createSlice({
@@ -92,6 +94,9 @@ export const accountSlice = createSlice({
     },
     setIsWebview: (state: AccountSliceType, action: PayloadAction<boolean>) => {
       state.isWebview = action.payload;
+    },
+    triggerRefresh: (state: AccountSliceType) => {
+      state.refreshCount += 1;
     }
   },
   extraReducers: (builder) => {
@@ -113,7 +118,8 @@ export const {
   setAccountAddress,
   setAccessTokenRedirectRoute,
   clearAccessTokenRedirectRoute,
-  setIsWebview
+  setIsWebview,
+  triggerRefresh
 } = accountSlice.actions;
 
 export const accountReducer = accountSlice.reducer;

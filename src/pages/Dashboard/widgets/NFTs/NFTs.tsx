@@ -1,18 +1,23 @@
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { DrtLink, OutputContainer } from 'components';
 import { useGetAccountInfo } from 'lib';
 import { DataTestIdsEnum } from 'localConstants';
 import { useLazyGetNftsQuery } from 'redux/endpoints';
 import { routeNames } from 'routes';
+import { RootState } from 'redux/store';
 import { NFTRow } from './components';
 
 export const NFTs = () => {
   const { websocketEvent, address } = useGetAccountInfo();
+  const refreshCount = useSelector(
+    (state: RootState) => state.account.refreshCount
+  );
   const [fetchNFTs, { data: nftsData, isLoading }] = useLazyGetNftsQuery();
 
   useEffect(() => {
     fetchNFTs({ address });
-  }, [address, websocketEvent]);
+  }, [address, websocketEvent, refreshCount]);
 
   if (!isLoading && nftsData?.length === 0) {
     return (
